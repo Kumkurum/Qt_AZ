@@ -15,9 +15,11 @@ private:
     float Multiplier ;
     float Start;
     QString Text_on_Button;
-    static  QPolygonF Hexogon_Polygon_Point;
+    void New_Hexogon_Polygon();
 
 public:
+    static QPoint Show_Size;
+    static QVector<QPoint> Hexogon_Points;
     QPushButton* P_Hexogon_Button;
     static int X_Pos;
     static int Y_Pos;
