@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -11,6 +12,22 @@ MainWindow::MainWindow(QWidget *parent)
     int Number[]{ 24,21,20,19,18,17,16,17,16,17,18,19,20,21,24 };   //для определения координат кнопок в строке
     int Iter_Count[] = { 6, 9, 10, 11, 12, 13, 14, 13, 14, 13, 12, 11, 10, 9, 6 };//число кнопок в строке
     int X_Coord_Start []= { 850  ,   586 ,    498 ,    410 ,    322 ,    234 ,    146 ,    234  ,  146    ,  234  ,  322 ,    410 ,    498 ,    586 ,    850 };// стартовые координаты по высоте
+
+    //    //////меню
+    //    ///
+    //    QAction *quit = new QAction("&Quit",this);
+    //    QMenu *file ;
+    //    file= menuBar()->addMenu("&File");
+
+    //    file->addAction(quit);
+
+
+
+    //    connect(quit, &QAction::triggered,qApp,QApplication::quit);
+
+    ////// сделать класс меню!
+
+    Menu_Main_Window();
 
     for (int Iter_Hight = 0 ; Iter_Hight < 15  ;Iter_Hight ++ ) {
 
@@ -23,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         }
     }
-    connect(ui->Scan,SIGNAL(clicked()),SLOT(Scan()));           //Связывание кнопки  считывания информации с тектового файла
-    connect(ui->Brows,SIGNAL(clicked()),SLOT(Brows()));     //Связывание кнопки открытия поиска директории
 
 
 
@@ -51,10 +66,9 @@ void MainWindow::wheelEvent(    QWheelEvent *   pe ){       //попытка п�
 
 void MainWindow::Brows(){                                                   //функция открытия директории
     QString str=QFileDialog::getOpenFileName(0,
-                                             "Select a Directory",
-                                             ui->File_Path->text());                //присваиваем путь к файлу в str
+                                             "Select a Directory");
     File_Name = new QFile(str);                                             //Создаём файл с путём str
-    ui->File_Path->setText(str);                                            //выводим путь к файлу в лэйбл
+
     //QFileDialog::getOpenFileName()
 }
 
@@ -68,20 +82,20 @@ void MainWindow::Scan(){                                                //фун
     QVector<QString> *Param = new QVector<QString>[4];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
 
     QVector<QString> TBC_Color= {                                                                   //варианты расцветки в зависимости от топлива
-        "rgb(100,200,200)",
-        "rgb(100,100,200)",
-        "rgb(100,20,100)",
-        "rgb(100,50,200)",
-        "rgb(100,255,200)",
-        "rgb(100,200,100)"};
+                                                                                                    "rgb(100,200,200)",
+                                                                                                    "rgb(100,100,200)",
+                                                                                                    "rgb(100,20,100)",
+                                                                                                    "rgb(100,50,200)",
+                                                                                                    "rgb(100,255,200)",
+                                                                                                    "rgb(100,200,100)"};
     QVector<QString> Fuel_Name={                                                                //название топлива
-        "Type_1",
-        "Type_2",
-        "Type_3",
-        "Type_4",
-        "Type_5",
-        "Type_6"
-    };
+                                                                                                "Type_1",
+                                                                                                "Type_2",
+                                                                                                "Type_3",
+                                                                                                "Type_4",
+                                                                                                "Type_5",
+                                                                                                "Type_6"
+                               };
     QString Liner;              //для записи полной строки, так как считываем всю строку
     QString Str;                    //для записи нудного параметра
     QString Color_Nucler;
@@ -90,7 +104,7 @@ void MainWindow::Scan(){                                                //фун
         for (int  i =0;  i <4 ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
 
             Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //до знака табуляции копируем
-                                                                                                                                                                                                                                        //добавляем в базу значение параметра
+            //добавляем в базу значение параметра
 
 
 
@@ -102,7 +116,7 @@ void MainWindow::Scan(){                                                //фун
     QString Param_All;                                                                                                                                                                      //строка для считывания
 
 
-   //Для нахождение данных для конкретной кнопки будем пробегать по всем кнопкам и по всем данным в файле
+    //Для нахождение данных для конкретной кнопки будем пробегать по всем кнопкам и по всем данным в файле
 
     //ТРЕБУЕТСЯ УЛУЧШИТЬ////
     for (int Iter_in_Button=0; Iter_in_Button < 163;Iter_in_Button++ ) {                                                         //пробегаем по всем кнопкам их 163
@@ -123,3 +137,40 @@ void MainWindow::Scan(){                                                //фун
         }
     }
 }
+void MainWindow::Menu_Main_Window(){
+
+    //////меню
+    ///
+
+    QMenu *General ;
+    QAction *quit = new QAction("&Quit",this);
+    QAction * Choice_Archive = new QAction("&Choice_Archive",this);
+    QAction * Show_Fuel_Params = new QAction("&Fuel_Tipy",this);
+
+    QMenu* Options;
+    QAction *First_Option= new QAction("&First",this);
+    QAction *Second_Option = new QAction("&Second",this);
+
+
+    General = menuBar()->addMenu("&General");
+    General->addAction(quit);
+    General->addAction(Choice_Archive);
+    General->addAction(Show_Fuel_Params);
+
+    connect(quit, &QAction::triggered,qApp,QApplication::quit);
+    connect(Choice_Archive, &QAction::triggered,this,&MainWindow::Brows);
+    connect(Show_Fuel_Params, &QAction::triggered,this,&MainWindow::Scan);
+
+
+
+    Options= menuBar()->addMenu("&Options");
+    Options->addAction(First_Option);
+    Options->addAction(Second_Option);
+
+
+
+
+
+    //// сделать класс меню!
+
+};

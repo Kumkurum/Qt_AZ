@@ -12,11 +12,13 @@ CONFIG += c++11
 SOURCES += \
     hexogon_button.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    menu_main_window.cpp
 
 HEADERS += \
     hexogon_button.h \
-    mainwindow.h
+    mainwindow.h \
+    menu_main_window.h
 
 FORMS += \
     mainwindow.ui

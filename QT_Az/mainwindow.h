@@ -1,12 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "hexogon_button.h"
 #include <QMainWindow>
 #include <QKeyEvent>
-#include "hexogon_button.h"
 #include <QWidget>
 #include<QWheelEvent>
-//#include<QTextCodec>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,10 +19,15 @@ public:
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
     Hexogon_Button *Active_Zone[163];
+
+        QFile *File_Name;
+
     void Parser(QFile &_File);
-    QFile *File_Name;
+
 private:
+    void Menu_Main_Window();
 
     void wheelEvent(QWheelEvent*);
     Ui::MainWindow *ui;

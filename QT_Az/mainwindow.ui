@@ -13,44 +13,14 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>570</y>
-      <width>141</width>
-      <height>78</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLineEdit" name="File_Path"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Brows">
-       <property name="text">
-        <string>Поиск</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="Scan">
-       <property name="text">
-        <string>Сканировать</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>1059</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

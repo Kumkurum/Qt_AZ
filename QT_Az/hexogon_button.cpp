@@ -22,7 +22,6 @@ Hexogon_Button::Hexogon_Button( const int &_x_position, const int &_y_position, 
     Change_Color("green");
 
 
-
     P_Hexogon_Button->installEventFilter(this);                                                       // перехватываем событие
 
     connect(P_Hexogon_Button,SIGNAL(clicked()),                                                     //связываем левый клик с функцией
