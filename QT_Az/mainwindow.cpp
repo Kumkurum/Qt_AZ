@@ -13,21 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     int Iter_Count[] = { 6, 9, 10, 11, 12, 13, 14, 13, 14, 13, 12, 11, 10, 9, 6 };//число кнопок в строке
     int X_Coord_Start []= { 850  ,   586 ,    498 ,    410 ,    322 ,    234 ,    146 ,    234  ,  146    ,  234  ,  322 ,    410 ,    498 ,    586 ,    850 };// стартовые координаты по высоте
 
-    //    //////меню
-    //    ///
-    //    QAction *quit = new QAction("&Quit",this);
-    //    QMenu *file ;
-    //    file= menuBar()->addMenu("&File");
-
-    //    file->addAction(quit);
-
-
-
-    //    connect(quit, &QAction::triggered,qApp,QApplication::quit);
-
-    ////// сделать класс меню!
-
-    Menu_Main_Window();
+    Menu_Main_Window();//метод создания меню
 
     for (int Iter_Hight = 0 ; Iter_Hight < 15  ;Iter_Hight ++ ) {
 
@@ -40,9 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         }
     }
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -77,9 +60,9 @@ void MainWindow::Scan(){                                                //фун
     QTextStream File_Text(File_Name);                           //создаём поток и передаём в него наш файл
     File_Name->open(QIODevice::ReadOnly);               //открываем файл для чтения
     QChar _Index_of_Separate = '\t';                                //используем разделитель между данными в даненом случае /////ТАБУЛЯЦИЯ/////
-
+    const int Size_Param =4;
     //СТОИТ УЛУЧШИТЬ И СДЕЛАТЬ АВТОМАТИЧЕСКИЙ ПОДСЧЁТ КОЛЛИЧЕСТВА ПАРАМЕТРОВ В ТЕКТОВОМ ФАЙЛЕ ИЛИ СДЕЛАТЬ БАЗУ ДАННЫХ
-    QVector<QString> *Param = new QVector<QString>[4];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
+    QVector<QString> *Param = new QVector<QString>[Size_Param];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
 
     QVector<QString> TBC_Color= {                                                                   //варианты расцветки в зависимости от топлива
                                                                                                     "rgb(100,200,200)",
@@ -101,12 +84,10 @@ void MainWindow::Scan(){                                                //фун
     QString Color_Nucler;
     while  (!File_Text.atEnd()){                                                                                                                                                    //считываем данные до конца файла
         Liner   = File_Text.readLine();                                                                                                                                             //построчно считываем данные
-        for (int  i =0;  i <4 ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
+        for (int  i =0;  i <Size_Param ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
 
             Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //до знака табуляции копируем
             //добавляем в базу значение параметра
-
-
 
             Liner   = Liner.remove(    0,Liner.indexOf(    _Index_of_Separate  )+1);                                         //сжигаем из строки пройденный параметр
 
@@ -118,7 +99,7 @@ void MainWindow::Scan(){                                                //фун
 
     //Для нахождение данных для конкретной кнопки будем пробегать по всем кнопкам и по всем данным в файле
 
-    //ТРЕБУЕТСЯ УЛУЧШИТЬ////
+    //ТРЕБУЕТСЯ УЛУЧШИТЬ//// (НА БУДУЮЩЕЕ)
     for (int Iter_in_Button=0; Iter_in_Button < 163;Iter_in_Button++ ) {                                                         //пробегаем по всем кнопкам их 163
         for (int Iter_in_File = 0 ; Iter_in_File < 163 ;Iter_in_File++ ) {                                                            // пробегаем по всем данным по кнопкам в файле
 
@@ -142,24 +123,23 @@ void MainWindow::Menu_Main_Window(){
     //////меню
     ///
 
-    QMenu *General ;
-    QAction *quit = new QAction("&Quit",this);
-    QAction * Choice_Archive = new QAction("&Choice_Archive",this);
-    QAction * Show_Fuel_Params = new QAction("&Fuel_Tipy",this);
+    QMenu *General ;//создание выподающего меню с вариантами ниже
 
-    QMenu* Options;
+
+    QMenu* Options;//второе выпадающее меню, ПОКА ПУСТО (НА БУДУЮЩЕЕ)
+    //пиши как первое
     QAction *First_Option= new QAction("&First",this);
     QAction *Second_Option = new QAction("&Second",this);
 
 
     General = menuBar()->addMenu("&General");
-    General->addAction(quit);
-    General->addAction(Choice_Archive);
-    General->addAction(Show_Fuel_Params);
+    General->addAction("&Quit",//первый параметр это название сигнала & это горячая клавиша
+                       this,//связывает с объектом этим-то
+                       QApplication::quit//вот этим слотом
+                       );// тут можно передать 4 параметром горячую клавишу
+    General->addAction("&Archive",this,SLOT(Brows()));
+    General->addAction("&Fuel_Tipy",this,&MainWindow::Scan);
 
-    connect(quit, &QAction::triggered,qApp,QApplication::quit);
-    connect(Choice_Archive, &QAction::triggered,this,&MainWindow::Brows);
-    connect(Show_Fuel_Params, &QAction::triggered,this,&MainWindow::Scan);
 
 
 
@@ -167,10 +147,7 @@ void MainWindow::Menu_Main_Window(){
     Options->addAction(First_Option);
     Options->addAction(Second_Option);
 
-
-
-
-
     //// сделать класс меню!
 
 };
+

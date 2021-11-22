@@ -27,6 +27,8 @@ public:
     void Parser(QFile &_File);
 
 private:
+
+
     void Menu_Main_Window();
 
     void wheelEvent(QWheelEvent*);
