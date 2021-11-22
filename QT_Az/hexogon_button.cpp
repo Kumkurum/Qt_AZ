@@ -101,8 +101,14 @@ P_Hexogon_Button->move(x*Multiplier -   (X_Pos)*(Multiplier-Start)  -(X_Pos_New-
                        y*Multiplier -   (Y_Pos)*(Multiplier-Start) -(Y_Pos_New-Y_Pos)*(Multiplier));
 
 };
-
+//надо бы придумать коннект со всеми кнопками что бы по иземенению в контекстном меню цвета кнопки менялись все кнопки сразу без вызова из меню команды
+//(НА БУЦДУЮЩЕЕ)
 void Hexogon_Button::Change_Color_Fuel(){
+    QString Type_Fuel_in_TBC=Text_on_Button.mid(Text_on_Button.indexOf("Type_"),6);//вырезаем с такого-то сивола название топлива, потом надо изменить на настоящего вида
 
-    Change_Color( "rgb(0,200,10)");
+  for (int Iter=0; Iter<Fuel_Name.count() ; Iter++) {
+      if(Fuel_Name[Iter]==Type_Fuel_in_TBC)
+          TBC_Color[Iter]="rgb(0,200,10)";
+  }
+
 }

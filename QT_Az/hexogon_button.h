@@ -22,6 +22,8 @@ private:
 public:
     Hexogon_Button(const int &, const int &,  const float & , QMainWindow& ,QString&);
 
+   static QVector<QString>  TBC_Color;
+    static QVector<QString> Fuel_Name;
     static QPoint Show_Size;
     static QVector<QPoint> Hexogon_Points;
     static int X_Pos;

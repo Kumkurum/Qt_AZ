@@ -64,21 +64,21 @@ void MainWindow::Scan(){                                                //фун
     //СТОИТ УЛУЧШИТЬ И СДЕЛАТЬ АВТОМАТИЧЕСКИЙ ПОДСЧЁТ КОЛЛИЧЕСТВА ПАРАМЕТРОВ В ТЕКТОВОМ ФАЙЛЕ ИЛИ СДЕЛАТЬ БАЗУ ДАННЫХ
     QVector<QString> *Param = new QVector<QString>[Size_Param];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
 
-    QVector<QString> TBC_Color= {                                                                   //варианты расцветки в зависимости от топлива
-                                                                                                    "rgb(100,200,200)",
-                                                                                                    "rgb(100,100,200)",
-                                                                                                    "rgb(100,20,100)",
-                                                                                                    "rgb(100,50,200)",
-                                                                                                    "rgb(100,255,200)",
-                                                                                                    "rgb(100,200,100)"};
-    QVector<QString> Fuel_Name={                                                                //название топлива
-                                                                                                "Type_1",
-                                                                                                "Type_2",
-                                                                                                "Type_3",
-                                                                                                "Type_4",
-                                                                                                "Type_5",
-                                                                                                "Type_6"
-                               };
+//    QVector<QString> TBC_Color= {                                                                   //варианты расцветки в зависимости от топлива
+//                                                                                                    "rgb(100,200,200)",
+//                                                                                                    "rgb(100,100,200)",
+//                                                                                                    "rgb(100,20,100)",
+//                                                                                                    "rgb(100,50,200)",
+//                                                                                                    "rgb(100,255,200)",
+//                                                                                                    "rgb(100,200,100)"};
+//    QVector<QString> Fuel_Name={                                                                //название топлива
+//                                                                                                "Type_1",
+//                                                                                                "Type_2",
+//                                                                                                "Type_3",
+//                                                                                                "Type_4",
+//                                                                                                "Type_5",
+//                                                                                                "Type_6"
+//                               };
     QString Liner;              //для записи полной строки, так как считываем всю строку
     QString Str;                    //для записи нудного параметра
     QString Color_Nucler;
@@ -86,7 +86,7 @@ void MainWindow::Scan(){                                                //фун
         Liner   = File_Text.readLine();                                                                                                                                             //построчно считываем данные
         for (int  i =0;  i <Size_Param ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
 
-            Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //до знака табуляции копируем
+            Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //копируем до знака табуляции копируем
             //добавляем в базу значение параметра
 
             Liner   = Liner.remove(    0,Liner.indexOf(    _Index_of_Separate  )+1);                                         //сжигаем из строки пройденный параметр
@@ -111,9 +111,9 @@ void MainWindow::Scan(){                                                //фун
                 Active_Zone[Iter_in_Button]->Set_Text(Param_All);                                                                   //конкретно добавление на конпку текста
                 Param_All.clear();                                                                                                                                                                      //отчитска переменной для следующей кнопки
 
-                for (        int Iter_Color=0      ;     Iter_Color   <    TBC_Color.count()    ;    Iter_Color++     )            //изменяем цвет кнопки в зависимости от типа топлива
-                    if(Param[2][Iter_in_File].contains( Fuel_Name[Iter_Color]))
-                        Active_Zone[Iter_in_Button]->Change_Color(TBC_Color[Iter_Color]);                                             //для этого для каждого обьекта кнопки вызвываем метод изменения цвета
+                for (        int Iter_Color=0      ;     Iter_Color   <    Active_Zone[Iter_in_Button]->TBC_Color.count()    ;    Iter_Color++     )            //изменяем цвет кнопки в зависимости от типа топлива
+                    if(Param[2][Iter_in_File].contains( Active_Zone[Iter_in_Button]->Fuel_Name[Iter_Color]))
+                        Active_Zone[Iter_in_Button]->Change_Color(Active_Zone[Iter_in_Button]->TBC_Color[Iter_Color]);                                             //для этого для каждого обьекта кнопки вызвываем метод изменения цвета
             }
         }
     }

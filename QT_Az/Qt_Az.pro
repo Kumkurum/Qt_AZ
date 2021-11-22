@@ -16,6 +16,7 @@ SOURCES += \
     menu_main_window.cpp
 
 HEADERS += \
+    Static_Parameters.h \
     hexogon_button.h \
     mainwindow.h \
     menu_main_window.h
