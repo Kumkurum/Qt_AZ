@@ -22,13 +22,14 @@ public:
 
     Hexogon_Button *Active_Zone[163];
 
-        QFile *File_Name;
+    QFile *File_Name;
 
     void Parser(QFile &_File);
 
 private:
 
-
+    QVector<QString> * Parsing_Parameters( const int    ,int    , const QChar);
+    void Save_Parameters(QVector<QString>*,QVector<QString>*,QVector<QString>&);
     void Menu_Main_Window();
 
     void wheelEvent(QWheelEvent*);

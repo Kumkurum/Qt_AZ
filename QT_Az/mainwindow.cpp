@@ -56,67 +56,106 @@ void MainWindow::Brows(){                                                   //ф
 }
 
 
-void MainWindow::Scan(){                                                //функция считывания данных с текстового файла
+//void MainWindow::Scan(){                                                //функция считывания данных с текстового файла
+//    QTextStream File_Text(File_Name);                           //создаём поток и передаём в него наш файл
+//    File_Name->open(QIODevice::ReadOnly);               //открываем файл для чтения
+//    QChar _Index_of_Separate = '\t';                                //используем разделитель между данными в даненом случае /////ТАБУЛЯЦИЯ/////
+//    const int Size_Param =4;
+//    //СТОИТ УЛУЧШИТЬ И СДЕЛАТЬ АВТОМАТИЧЕСКИЙ ПОДСЧЁТ КОЛЛИЧЕСТВА ПАРАМЕТРОВ В ТЕКТОВОМ ФАЙЛЕ ИЛИ СДЕЛАТЬ БАЗУ ДАННЫХ
+//    QVector<QString> *Param = new QVector<QString>[Size_Param];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
+
+
+//    QString Liner;              //для записи полной строки, так как считываем всю строку
+//    QString Str;                    //для записи нудного параметра
+//    QString Color_Nucler;
+//    while  (!File_Text.atEnd()){                                                                                                                                                    //считываем данные до конца файла
+//        Liner   = File_Text.readLine();                                                                                                                                             //построчно считываем данные
+//        for (int  i =0;  i <Size_Param ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
+
+//            Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //копируем до знака табуляции копируем
+//            //добавляем в базу значение параметра
+
+//            Liner   = Liner.remove(    0,Liner.indexOf(    _Index_of_Separate  )+1);                                         //сжигаем из строки пройденный параметр
+
+//        }
+//    }
+//    File_Name->close();                                                                                                                                                                     //закрываем файл, так как считали всё что нужно
+//    QString Param_All;                                                                                                                                                                      //строка для считывания
+
+
+//    //Для нахождение данных для конкретной кнопки будем пробегать по всем кнопкам и по всем данным в файле
+
+//    //ТРЕБУЕТСЯ УЛУЧШИТЬ//// (НА БУДУЮЩЕЕ)
+//    for (int Iter_in_Button=0; Iter_in_Button < 163;Iter_in_Button++ ) {                                                         //пробегаем по всем кнопкам их 163
+//        for (int Iter_in_File = 0 ; Iter_in_File < 163 ;Iter_in_File++ ) {                                                            // пробегаем по всем данным по кнопкам в файле
+
+//            if ( Active_Zone[Iter_in_Button]->Nomer_TBC == Param[1][Iter_in_File].toInt()){                                                 //если совпадают то добавляем все параметры  на кнопку
+//                for (int Iter_Param = 0 ;Iter_Param < 4 ;Iter_Param++ ) {
+//                    Param_All.append(Param[Iter_Param][Iter_in_File]).append('\n');
+//                }
+
+//                Active_Zone[Iter_in_Button]->Set_Text(Param_All);                                                                   //конкретно добавление на конпку текста
+//                Param_All.clear();                                                                                                                                                                      //отчитска переменной для следующей кнопки
+
+//                for (        int Iter_Color=0      ;     Iter_Color   <    Active_Zone[Iter_in_Button]->TBC_Color.count()    ;    Iter_Color++     )            //изменяем цвет кнопки в зависимости от типа топлива
+//                    if(Param[2][Iter_in_File].contains( Active_Zone[Iter_in_Button]->Fuel_Name[Iter_Color]))
+//                        Active_Zone[Iter_in_Button]->Change_Color(Active_Zone[Iter_in_Button]->TBC_Color[Iter_Color]);                                             //для этого для каждого обьекта кнопки вызвываем метод изменения цвета
+//            }
+//        }
+//    }
+//}
+
+void MainWindow::Scan(){
+
+
+
+
+}
+
+
+QVector<QString> * MainWindow::Parsing_Parameters( const int _Count_Parameters,  const int _Delete_Lines ,QChar _Index_of_Separate){
     QTextStream File_Text(File_Name);                           //создаём поток и передаём в него наш файл
     File_Name->open(QIODevice::ReadOnly);               //открываем файл для чтения
-    QChar _Index_of_Separate = '\t';                                //используем разделитель между данными в даненом случае /////ТАБУЛЯЦИЯ/////
-    const int Size_Param =4;
+    // _Index_of_Separate = '\t';                                //используем разделитель между данными в даненом случае /////ТАБУЛЯЦИЯ/////
+    //  const int Size_Param =4;
     //СТОИТ УЛУЧШИТЬ И СДЕЛАТЬ АВТОМАТИЧЕСКИЙ ПОДСЧЁТ КОЛЛИЧЕСТВА ПАРАМЕТРОВ В ТЕКТОВОМ ФАЙЛЕ ИЛИ СДЕЛАТЬ БАЗУ ДАННЫХ
-    QVector<QString> *Param = new QVector<QString>[Size_Param];              //массив из 4 векторов для считывания данных, их может быть и больше вопрос к программе
+    QVector<QString> *Param = new QVector<QString>[_Count_Parameters];              //массив из векторов для считывания данных, их может быть и больше вопрос к программе
+        File_Text.readLine(_Delete_Lines);
 
-//    QVector<QString> TBC_Color= {                                                                   //варианты расцветки в зависимости от топлива
-//                                                                                                    "rgb(100,200,200)",
-//                                                                                                    "rgb(100,100,200)",
-//                                                                                                    "rgb(100,20,100)",
-//                                                                                                    "rgb(100,50,200)",
-//                                                                                                    "rgb(100,255,200)",
-//                                                                                                    "rgb(100,200,100)"};
-//    QVector<QString> Fuel_Name={                                                                //название топлива
-//                                                                                                "Type_1",
-//                                                                                                "Type_2",
-//                                                                                                "Type_3",
-//                                                                                                "Type_4",
-//                                                                                                "Type_5",
-//                                                                                                "Type_6"
-//                               };
-    QString Liner;              //для записи полной строки, так как считываем всю строку
-    QString Str;                    //для записи нудного параметра
-    QString Color_Nucler;
+
+    QString Line;              //для записи полной строки, так как считываем всю строку
+
     while  (!File_Text.atEnd()){                                                                                                                                                    //считываем данные до конца файла
-        Liner   = File_Text.readLine();                                                                                                                                             //построчно считываем данные
-        for (int  i =0;  i <Size_Param ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
+        Line   = File_Text.readLine();                                                                                                                                             //построчно считываем данные
+        for (int  i =0;  i <_Count_Parameters ; i++ ) {                                                                                                                                                         //смотря сколько параметров столько раз и считываем
 
-            Param[i].append( Liner.left(    Liner.indexOf(  _Index_of_Separate    )   ));                                       //копируем до знака табуляции копируем
+            Param[i].append( Line.left(    Line.indexOf(  _Index_of_Separate    )   ));                                       //копируем до знака табуляции копируем
             //добавляем в базу значение параметра
 
-            Liner   = Liner.remove(    0,Liner.indexOf(    _Index_of_Separate  )+1);                                         //сжигаем из строки пройденный параметр
+            Line   = Line.remove(    0,Line.indexOf(    _Index_of_Separate  )+1);                                         //сжигаем из строки пройденный параметр
 
         }
     }
+
     File_Name->close();                                                                                                                                                                     //закрываем файл, так как считали всё что нужно
-    QString Param_All;                                                                                                                                                                      //строка для считывания
 
 
-    //Для нахождение данных для конкретной кнопки будем пробегать по всем кнопкам и по всем данным в файле
 
-    //ТРЕБУЕТСЯ УЛУЧШИТЬ//// (НА БУДУЮЩЕЕ)
-    for (int Iter_in_Button=0; Iter_in_Button < 163;Iter_in_Button++ ) {                                                         //пробегаем по всем кнопкам их 163
-        for (int Iter_in_File = 0 ; Iter_in_File < 163 ;Iter_in_File++ ) {                                                            // пробегаем по всем данным по кнопкам в файле
+    return Param;
+}
+void MainWindow::Save_Parameters(QVector<QString> *_Output_Data,QVector<QString> * _File_Data,QVector<QString> &_Name_Parameters){
+    for (int Parameters_Iterator=0    ;   Parameters_Iterator   <   _Name_Parameters.count() ; Parameters_Iterator++) {
 
-            if ( Active_Zone[Iter_in_Button]->Nomer_TBC == Param[1][Iter_in_File].toInt()){                                                 //если совпадают то добавляем все параметры  на кнопку
-                for (int Iter_Param = 0 ;Iter_Param < 4 ;Iter_Param++ ) {
-                    Param_All.append(Param[Iter_Param][Iter_in_File]).append('\n');
-                }
 
-                Active_Zone[Iter_in_Button]->Set_Text(Param_All);                                                                   //конкретно добавление на конпку текста
-                Param_All.clear();                                                                                                                                                                      //отчитска переменной для следующей кнопки
+        for (int TBC_Iter=0; TBC_Iter<163; TBC_Iter++) {
 
-                for (        int Iter_Color=0      ;     Iter_Color   <    Active_Zone[Iter_in_Button]->TBC_Color.count()    ;    Iter_Color++     )            //изменяем цвет кнопки в зависимости от типа топлива
-                    if(Param[2][Iter_in_File].contains( Active_Zone[Iter_in_Button]->Fuel_Name[Iter_Color]))
-                        Active_Zone[Iter_in_Button]->Change_Color(Active_Zone[Iter_in_Button]->TBC_Color[Iter_Color]);                                             //для этого для каждого обьекта кнопки вызвываем метод изменения цвета
-            }
+            _Output_Data[Parameters_Iterator][TBC_Iter]=_File_Data[Parameters_Iterator][TBC_Iter];
+
         }
     }
+
+
+
 }
 void MainWindow::Menu_Main_Window(){
 
